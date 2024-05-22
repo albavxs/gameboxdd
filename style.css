@@ -1,0 +1,406 @@
+body {
+    font-family: Arial, sans-serif;
+    background-color: #1d232a;
+    color: #7f8d9b;
+     scrollbar-width: 10%;
+     /* Reduz a largura da barra de rolagem para fina */
+        
+}
+
+
+.header {
+    background-color: #333;
+    color: white;
+    text-align: center;
+    position: relative;
+    padding: -30px;
+    
+}
+.hidden {
+    display: none;
+}
+
+
+.game-card {
+    margin: 10px;
+    padding: 10px;
+}
+
+.game-card h2 {
+    margin: 0;
+}
+
+.game-card p {
+    margin: 5px 0;
+}
+
+.avaliar-button {
+    background-color: rgb(132, 91, 186);
+    color: rgb(217, 217, 217);
+    font-family: Arial, Helvetica, sans-serif;
+    padding: 6px 5px;
+    border-radius: 10px;
+    position: relative;
+    left: 550px;
+    top: -105px;
+    cursor: pointer;
+}
+
+
+
+.avaliar {
+    background-color: #00ac1c;
+    color: #f4fcf0;
+    box-shadow: rgba(255, 255, 255, 0.3) 0px 1px 0px 0px inset;
+    border: none;
+    border-radius: 3px 3px 3px 3px;
+    font-size: 13px;
+    line-height: 30px;
+    text-align: right;
+    letter-spacing: 0.975px;
+    padding: 8px 20px;
+    cursor: pointer;
+    position: relative;
+    right: 0px;
+    bottom: 5px;
+    z-index: 1;
+    
+}
+
+.modal {
+    display: none;
+    position: fixed;
+    z-index: 1;
+    padding-top: 100px;
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    overflow: auto;
+    background-color: rgba(0, 0, 0, 0.4);
+    z-index: 1000;
+}
+
+.modal-content {
+    background-color: #445566;
+    color: #ebedef;
+    margin: auto;
+    padding: 20px;
+    width: 50%;
+    box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+    animation-name: animatetop;
+    animation-duration: 0.4s;
+    border-radius: 10px;
+}
+
+@keyframes animatetop {
+    from {
+        top: -300px;
+        opacity: 0
+    }
+
+    to {
+        top: 0;
+        opacity: 1
+    }
+}
+
+.gameboxd {
+    position: relative;
+    top: 20px;
+    left:-600px;
+}
+
+.close {
+    color: #aaa;
+    float: right;
+    font-size: 28px;
+    font-weight: bold;
+}
+
+.close:hover,
+.close:focus {
+    color: black;
+    text-decoration: none;
+    cursor: pointer;
+}
+
+.star {
+    font-size: 2em;
+    color: gray;
+    cursor: pointer;
+}
+
+.star.selected {
+    color: gold;
+}
+
+.searchGames {
+    position: relative;
+    
+   
+    
+
+}
+
+#searchInput {
+    padding: 5px 0px;
+    border-radius: 5px;
+    border-radius: 5px;
+        
+        /* Defina a altura desejada */
+        box-sizing: border-box;
+        width: calc(60% - 20px);
+        /* Ajuste a largura conforme necessário */
+}
+/* Estilo do input */
+    .searchGames input[type="text"] {
+        position: relative;
+        top: -27px;
+        width: calc(60% - 40px);
+        /* Ajuste conforme necessário */
+        padding: 10px 0px;
+        box-sizing: border-box;
+        text-align: left;
+        
+        /* Alinha o texto do input à esquerda */
+    }
+
+    /* Estilo do placeholder */
+    .searchGames input[type="text"]::placeholder {
+        text-indent: 20px;
+        /* Move o placeholder 20px para a direita */
+    }
+
+.searchGames img {
+    position: absolute;
+    margin-left: -30px;
+    margin-top: -25px;
+    width: 25px;
+    cursor: pointer;
+}
+.menubar img {
+    position: absolute;
+    margin-left: -530px;
+    margin-top: -84px;
+    width: 25px;
+    cursor: pointer;
+}
+
+.twitchlog img {
+    position: absolute;
+    background-color: rgb(132, 91, 186);
+        border-radius: 10px;
+        margin-left: 535px;
+        margin-top: -57px;
+        width: 30px;
+        cursor: pointer;
+        z-index: 1;
+        
+        
+}
+.twitchlog p {
+    padding: 6px;
+    margin: 0;
+    width: 10%;
+    top: -57px;
+    border-radius: 10px;
+    background-color: rgb(132, 91, 186);
+    position: relative;
+    left:1400px;
+    cursor: pointer;
+}
+
+
+#reviewForm>#gameName {
+    background-color: #ccddee;
+    font-size: 14px;
+    line-height: 14px;
+    text-align: start;
+    letter-spacing: normal;
+    box-shadow: rgb(255, 255, 255) 0px -1px 0px 0px inset;
+    border-radius: 5px;
+    padding-right: 28px;
+}
+
+#reviewForm>textarea {
+    background-color: #ccddee;
+    border-radius: 5px;
+    resize: none;
+    font-size: 14px;
+    line-height: 14px;
+    text-align: start;
+    letter-spacing: normal;
+    box-shadow: rgb(255, 255, 255) 0px -1px 0px 0px inset;
+    padding: 10px 10px;
+}
+
+.star-display {
+    color: gray;
+}
+
+.star-green {
+    color: #00c030;
+}
+
+.star-half {
+    color: #c0c0c0;
+    /* Cor cinza claro para meias estrelas */
+}
+
+#games {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    overflow-x: 30px;
+    scroll-snap-type: x mandatory;
+}
+
+.game {
+    flex: 0 0 auto;
+    width: 200px;
+    height: 300px;
+    scroll-snap-align: start;
+    margin-right: 10px;
+}
+
+.game img {
+    width: 100%;
+    height: 300px;
+    object-fit: cover;
+    cursor: pointer;
+    border: 2px solid transparent;
+    /* Borda verde na imagem */
+    transition: border-color 0.3s ease;
+}
+
+
+.game-popup {
+    position: relative;
+    top: -13%;
+    /* Altere o valor top para 100% */
+    left: 50%;
+    transform: translateX(-50%);
+    background-color: #23272a;
+    color: white;
+    padding: 5px 10px;
+    border-radius: 3px;
+    opacity: 0;
+    pointer-events: none;
+    transition: opacity 0.2s ease;
+    z-index: 1;
+}
+
+.game-popup::before {
+    content: '';
+    position: absolute;
+    bottom: -8px;
+    left: 50%;
+    transform: translateX(-50%);
+    border-width: 8px;
+    border-style: solid;
+    border-color: transparent transparent #23272a transparent;
+}
+
+.game:hover .game-popup {
+    opacity: 1;
+}
+
+.game:hover img {
+    border-color: #00c030;
+    /* Borda verde ao passar o mouse */
+}
+
+.game-name {
+    position: absolute;
+    bottom: 10px;
+    left: 50%;
+    transform: translateX(-50%);
+    background-color: rgba(0, 0, 0, 0.5);
+    color: white;
+    padding: 5px 10px;
+    border-radius: 5px;
+    opacity: 0;
+    transition: opacity 0.2s ease;
+    z-index: 0;
+}
+
+.game:hover .game-name {
+    opacity: 1;
+}
+
+
+
+#gameList {
+    width: 205px;
+    margin-top: 22px;
+    position: absolute;
+    background-color: #f9f9f9;
+    border-radius: 5px;
+    min-width: 160px;
+    box-shadow: 0px 8px 16px 0px rgba(0, 0, 0, 0.2);
+    z-index: 1;
+}
+
+#gameList div {
+    border: 0.001px solid white;
+    border-radius: 5px;
+    background-color: #667788;
+    color: #fdfdfe;
+    padding: 13px 16px;
+    text-decoration: none;
+    display: block;
+}
+
+#gameList div:hover {
+    background-color: #00ac1c;
+}
+
+#review {
+    background-color: #ccddee;
+    border-radius: 5px;
+    resize: none;
+    font-size: 14px;
+    line-height: 14px;
+    text-align: start;
+    letter-spacing: normal;
+    box-shadow: rgb(255, 255, 255) 0px -1px 0px 0px inset;
+    padding: 10px 10px;
+    position: absolute;
+    top: 180px;
+    right: 508px;
+    width: 300px;
+    padding: 10px;
+}
+
+#tags {
+    background-color: #ccddee;
+    border-radius: 5px;
+    resize: none;
+    font-size: 14px;
+    line-height: 14px;
+    text-align: start;
+    letter-spacing: normal;
+    box-shadow: rgb(255, 255, 255) 0px -1px 0px 0px inset;
+    padding: 10px 10px;
+    position: absolute;
+    top: 260px;
+    right: 605px;
+    width: 200px;
+    height: 10px;
+    padding: 10px;
+}
+
+#tagsLabel {
+    top: 235px;
+    right: 790px;
+    position: absolute;
+}
+
+
+#gameTitle {
+    display: inline-block;
+    vertical-align: top;
+    padding-left: 30px;
+
+}

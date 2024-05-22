@@ -1,0 +1,266 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+
+<head>
+  
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Login com Twitch</title>
+  <title>Gameboxd - Avaliação de Jogos</title>
+  <link rel="stylesheet" type="text/css" href="/style.css">
+
+  
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+  
+    header,
+    h1,
+    nav, 
+    .container,
+    main {
+      margin-top: 0;
+      padding-top: 0;
+    }
+
+    
+  </style>
+</head>
+
+<body>
+  <div class="header">
+    <h2 class="gameboxd">GameBoxd</h2>
+    <br>
+    <div class="searchGames">
+      <input type="text" id="searchInput"  placeholder="Pesquisar jogos...">
+      <img onclick="searchGames()"
+        src="https://png.pngtree.com/png-vector/20230505/ourmid/pngtree-magnifying-glass-flat-icon-vector-png-image_7086551.png"
+        alt="">
+    </div>
+  <div class="twitchlog">
+    <img id="twitchlogo" src="img/5bbf536f81b7e-3947ca1365e7f47d785e54f9fe47a828.png" alt="Twitch Logo">
+    <p id="twitchtext">Logar com a Twitch</p>
+  </div>
+  <div id="user-info"></div>
+    <div class="menubar">
+      <img onclick="menubar()" src="img/pngegg (2).png" alt="">
+    </div>
+    <br>
+    <div>
+      <button id="avaliarjogo" class="hidden">Avaliar jogo</button>
+    </div>
+  </div>
+
+  <div id="myModal" class="modal">
+    <div class="modal-content">
+      <span class="close">&times;</span>
+      <form id="reviewForm">
+        <label for="gameName">Nome do Jogo:</label><br>
+        <div id="gameList"></div>
+        <input type="text" id="gameName" name="gameName"><br><br>
+    </div>
+  </div>
+
+
+  <div id="games"></div>
+
+  <script>
+    const clientId = '6gh77tu54adbhrm9azrbtziyyh4gq4'; // Substitua pelo seu Client ID
+    const accessToken = 'jsd4xm44hw5v1g3ygrj152jqp2s5uh'; // Substitua pelo seu Access Token
+
+    async function searchGamesByName(query) {
+      try {
+        const url = `https://api.twitch.tv/helix/games?name=${query}`;
+
+        const response = await fetch(url, {
+          method: 'GET',
+          headers: {
+            'Client-ID': clientId,
+            'Authorization': `Bearer ${accessToken}`
+          }
+        });
+
+        const data = await response.json();
+        return data.data; // Retorna os dados dos jogos
+      } catch (error) {
+        console.error('Erro ao buscar jogos:', error);
+        return [];
+      }
+    }
+
+
+    async function fetchGames(query = '') {
+      try {
+        let url = 'https://api.twitch.tv/helix/games/top'; // URL da API da Twitch para obter os jogos mais populares
+        if (query) {
+          url = `https://api.twitch.tv/helix/games?name=${query}`;
+        }
+
+        const response = await fetch(url, {
+          method: 'GET', // Use o método GET para buscar os jogos
+          headers: {
+            'Client-ID': clientId,
+            'Authorization': `Bearer ${accessToken}`
+          }
+        });
+
+        const data = await response.json();
+        return data.data; // Retorna os dados dos jogos
+      } catch (error) {
+        console.error('Erro ao buscar jogos:', error);
+        return [];
+      }
+    }
+
+    async function displayGames(games) {
+      const gamesContainer = document.getElementById('games');
+      gamesContainer.innerHTML = '';
+
+      if (games.length > 0) {
+        games.slice(0, 6).forEach(game => { // Limita para os primeiros 5 jogos
+          const gameDiv = document.createElement('div');
+          gameDiv.className = 'game';
+
+          const gameImage = document.createElement('img');
+          gameImage.src = game.box_art_url.replace('{width}x{height}', '285x380');
+          gameImage.style.margin = 'auto';
+          gameImage.style.display = 'block';
+
+          const gamePopup = document.createElement('div');
+          gamePopup.className = 'game-popup';
+          gamePopup.textContent = game.name; // Exibe o nome do jogo no popup
+
+          gameDiv.appendChild(gameImage);
+          gameDiv.appendChild(gamePopup);
+          gamesContainer.appendChild(gameDiv);
+        });
+      } else {
+        gamesContainer.innerHTML = '<p>Nenhum jogo encontrado.</p>';
+      }
+    }
+
+    async function searchGames() {
+      const query = document.getElementById('searchInput').value;
+      const games = await fetchGames(query);
+      displayGames(games);
+    }
+     async function menubar() {
+       
+       
+      }
+
+    document.getElementById('searchInput').addEventListener('keyup', function (event) {
+      if (event.keyCode === 13) {
+        event.preventDefault();
+        searchGames();
+      }
+    });
+
+
+    document.addEventListener('DOMContentLoaded', async () => {
+      const games = await fetchGames();
+      displayGames(games);
+    });
+
+    document.getElementById('gameName').addEventListener('input', async function () {
+      // Limpa a lista suspensa existente
+      const gameList = document.getElementById('gameList');
+      gameList.innerHTML = '';
+
+      // Se o usuário digitou pelo menos um caractere, realiza a busca
+      if (this.value.length > 0) {
+        const games = await searchGamesByName(this.value);
+
+        games.forEach(game => {
+          const gameItem = document.createElement('div');
+          gameItem.textContent = game.name;
+          gameItem.addEventListener('click', function () {
+            document.getElementById('gameName').value = this.textContent;
+            gameList.innerHTML = '';
+
+            const modalContent = document.querySelector('.modal-content');
+            modalContent.innerHTML = ''; // Limpa o conteúdo existente
+
+            const gameImage = document.createElement('img');
+            gameImage.src = game.box_art_url.replace('{width}x{height}', '285x380');
+
+            const gameTitle = document.createElement('h2');
+            gameTitle.id = 'gameTitle';
+            gameTitle.textContent = game.name;
+
+
+            const commentArea = document.createElement('textarea');
+            commentArea.id = 'review';
+            commentArea.name = 'review';
+
+            const label = document.createElement('label');
+            label.htmlFor = 'tags';
+            label.id = 'tagsLabel'
+            label.textContent = 'Tags:';
+
+            const tagArea = document.createElement('input');
+            tagArea.id = 'tags';
+            tagArea.name = 'tags';
+
+            const starRating = document.createElement('div');
+            starRating.className = 'stars';
+
+            const rateBtn = document.createElement('button');
+            rateBtn.textContent = 'Avaliar';
+            rateBtn.className = 'avaliar';
+
+            let stars = []; // Adicione esta linha para armazenar referências para todas as estrelas
+
+            for (let i = 1; i <= 5; i++) {
+              const star = document.createElement('span');
+              star.className = 'star';
+              star.dataset.value = i;
+              star.textContent = '★';
+              stars.push(star); // Adicione cada estrela ao array de estrelas
+              star.addEventListener('click', function () {
+                var value = parseFloat(star.getAttribute('data-value'));
+                rating = value;
+                stars.forEach(function (s) {
+                  if (parseFloat(s.getAttribute('data-value')) <= value) {
+                    s.classList.add('selected');
+                  } else {
+                    s.classList.remove('selected');
+                  }
+                });
+              });
+              starRating.appendChild(star);
+            }
+
+
+
+
+            // Adicione os novos elementos ao modal
+            modalContent.appendChild(gameImage);
+            gameImage.style.width = '160px'
+            gameImage.style.borderRadius = '5px'
+            modalContent.appendChild(gameTitle);
+            modalContent.appendChild(commentArea);
+            modalContent.appendChild(label);
+            modalContent.appendChild(tagArea);
+            modalContent.appendChild(starRating);
+            modalContent.appendChild(rateBtn);
+          });
+          gameList.appendChild(gameItem);
+        });
+      }
+    });
+    
+
+           
+  </script>
+
+  
+
+<script src="/script.js"></script>
+
+</body>
+
+</html>
